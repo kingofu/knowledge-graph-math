@@ -1,0 +1,60 @@
+appId: com.knowledgegraph.math
+productName: 高等数学知识图谱
+copyright: Copyright © 2024
+
+directories:
+  output: dist-electron
+  buildResources: electron
+
+files:
+  - electron/**/*
+
+# Skip native dependency rebuild — we bundle our own standalone server
+# which already includes the correct native modules
+buildDependenciesFromSource: false
+nodeGypRebuild: false
+
+extraResources:
+  - from: .next/standalone
+    to: standalone
+    filter:
+      - "**/*"
+  - from: .next/static
+    to: standalone/.next/static
+    filter:
+      - "**/*"
+  - from: public
+    to: standalone/public
+    filter:
+      - "**/*"
+
+win:
+  target:
+    - nsis
+  icon: electron/icon.png
+
+mac:
+  target:
+    - dmg
+  icon: electron/icon.png
+
+linux:
+  target:
+    - AppImage
+  icon: electron/icon.png
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 高等数学知识图谱
+  installerLanguages:
+    - zh-CN
+  language: 2052
+
+asar: true
+asarUnpack:
+  - "**/*.node"
+  - "**/node_modules/.prisma/**"
